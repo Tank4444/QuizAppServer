@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "PLAYER")
-class Player {
+public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;

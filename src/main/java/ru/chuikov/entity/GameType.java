@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "APP_TYPE")
-class GameType {
+public class GameType {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
