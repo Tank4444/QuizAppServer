@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "APP_TYPE")
-class AppType {
+class GameType {
 
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +15,6 @@ class AppType {
         @Column
         String name;
 
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "appType")
-        List<App> apps;
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "gameType")
+        List<Game> games;
 }

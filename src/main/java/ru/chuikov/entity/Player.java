@@ -13,7 +13,7 @@ class Player {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "APP_ID", nullable = false)
-    App app;
+    Game game;
 
     @Column
     String name;

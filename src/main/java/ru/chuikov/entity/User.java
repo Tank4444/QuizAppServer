@@ -21,7 +21,10 @@ class User {
         @Column
         String org_name;
 
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-        List<App> apps;
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
+        List<Game> games;
+
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
+        List<File> files;
 
 }
