@@ -1,6 +1,10 @@
 package ru.chuikov.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,8 +18,11 @@ public class User implements UserDetails {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Long id;
         @Column
+        @NotNull
+        //@Pattern(regexp = "^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$")
         private String email;
         @Column
+        @NotNull
         private String password;
         @Column
         private String first_name;

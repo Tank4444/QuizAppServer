@@ -3,6 +3,8 @@ package ru.chuikov.service;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ru.chuikov.entity.User;
 
-public interface UserService extends UserDetailsService,CommonService<User> {
+import java.util.Optional;
 
+public interface UserService extends UserDetailsService,CommonService<User> {
+    Optional<User> getUserByEmail(String email);
 }

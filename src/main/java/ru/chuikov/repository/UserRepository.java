@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface UserRepository extends CommonRepository<User> {
 
     @Query("FROM User where email = :name")
-    User findByUsername(@Param("name")String username);
+    Optional<User> findByUsername(@Param("name")String username);
 }

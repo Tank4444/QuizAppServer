@@ -10,19 +10,24 @@ import ru.chuikov.repository.UserRepository;
 import ru.chuikov.service.UserService;
 
 import java.util.Collection;
+import java.util.Optional;
+
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PasswordEncoder encoder;
 
+
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        var user = getUserByEmail(username);
+        //return getUserByEmail(username).orElseThrow(()->new UsernameNotFoundException("User with name "+username+" not found"));
+        if(user.isPresent()) return user.get();
+        else throw  new UsernameNotFoundException("User with name "+username+" not found");
+
     }
 
     @Override
@@ -38,21 +43,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateById(User user) {
-        return null;
+        User oldUser = getUserByEmail(user.getEmail()).orElseThrow(()->new UsernameNotFoundException("User with name "+user.getEmail()+" not found"));
+        oldUser = user;
+        userRepository.saveAndFlush(oldUser);
+        return user;
     }
 
     @Override
     public void deleteById(Long id) {
-
+        userRepository.deleteById(id);
     }
 
     @Override
     public void deleteById(User user) {
-
+        deleteById(user.getId());
     }
 
     @Override
     public Collection<User> getAll() {
-        return null;
+        return userRepository.findAll();
+    }
+
+    @Override
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByUsername(email);
     }
 }
