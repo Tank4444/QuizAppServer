@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.chuikov.entity.User;
 
 @RestController
-@RequestMapping(path = {"/user"})
+@RequestMapping(path = {"/api/user"})
 public class UserController {
 
 
-    @GetMapping
+    @GetMapping(path = {"/",""})
     public ResponseEntity testUser(@AuthenticationPrincipal User user){
         System.out.println("User with id = "+user.getId()+" connected");
         return new ResponseEntity(HttpStatus.OK);

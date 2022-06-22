@@ -1,5 +1,6 @@
 package ru.chuikov;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,5 +15,12 @@ public class Initializer {
     }
     public static void main(String[] args) {
         SpringApplication.run(Initializer.class);
+    }
+
+    @Bean
+    CommandLineRunner runner(){
+        return args -> {
+
+        };
     }
 }

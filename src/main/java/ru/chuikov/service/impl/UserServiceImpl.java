@@ -1,7 +1,9 @@
 package ru.chuikov.service.impl;
 
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,44 +11,56 @@ import ru.chuikov.entity.User;
 import ru.chuikov.repository.UserRepository;
 import ru.chuikov.service.UserService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-@Service
+@Service @AllArgsConstructor @Transactional @Log4j2
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder encoder;
 
+    private final UserRepository userRepository;
+
+    private final PasswordEncoder encoder;
+
+    private final String TAG_LOG="USER_SERVICE";
 
     @Override
-    public User loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("load user by username = {}",username);
         var user = getUserByEmail(username);
         //return getUserByEmail(username).orElseThrow(()->new UsernameNotFoundException("User with name "+username+" not found"));
-        if(user.isPresent()) return user.get();
+        if(user.isPresent()) {
+            log.info("user loaded with email {} and password {}",user.get().getEmail(),user.get().getPassword());
+            return new org.springframework.security.core.userdetails.User(
+                    user.get().getUsername(),
+                    user.get().getPassword(),
+                    new ArrayList<>()
+            );
+        }
         else throw  new UsernameNotFoundException("User with name "+username+" not found");
 
     }
 
     @Override
-    public void save(User user) {
+    public void add(User user) {
+
         user.setPassword(encoder.encode(user.getPassword()));
+        log.info("add user with username {} and password = {}",user.getEmail(),user.getPassword());
         userRepository.save(user);
     }
 
     @Override
-    public User getById(Long id) {
-        return userRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("User with id ="+id+" not found"));
+    public Optional<User> getById(Long id) {
+        log.info("get user with id {}",id);
+        return Optional.of(userRepository.findById(id).orElseThrow(()-> new UsernameNotFoundException("User with id ="+id+" not found")));
     }
 
     @Override
-    public User updateById(User user) {
+    public void updateById(User user) {
         User oldUser = getUserByEmail(user.getEmail()).orElseThrow(()->new UsernameNotFoundException("User with name "+user.getEmail()+" not found"));
         oldUser = user;
         userRepository.saveAndFlush(oldUser);
-        return user;
     }
 
     @Override

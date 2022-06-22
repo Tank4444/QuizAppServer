@@ -5,14 +5,21 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "ACCOUNT")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class User implements UserDetails {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,20 +43,6 @@ public class User implements UserDetails {
 
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
         private List<File> files;
-
-        public User(Long id, String email, String password, String first_name, String last_name, String org_name, List<Game> games, List<File> files) {
-                this.id = id;
-                this.email = email;
-                this.password = password;
-                this.first_name = first_name;
-                this.last_name = last_name;
-                this.org_name = org_name;
-                this.games = games;
-                this.files = files;
-        }
-
-        public User() {
-        }
 
         public Long getId() {
                 return id;
@@ -113,7 +106,7 @@ public class User implements UserDetails {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
+                return new ArrayList<GrantedAuthority>();
         }
 
         @Override

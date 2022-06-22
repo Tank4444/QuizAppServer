@@ -1,6 +1,5 @@
 package ru.chuikov.controller.user;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = {"/user/reg"})
+@RequestMapping(path = "/api/reg")
 public class RegistrationController {
 
     @Autowired
@@ -25,7 +24,7 @@ public class RegistrationController {
     public ResponseEntity<Map> addUser( @RequestBody User user){
         var user1 =userService.getUserByEmail(user.getEmail());
         if(user1.isPresent()) return new ResponseEntity<>(Collections.singletonMap("status","User with this email present"), HttpStatus.BAD_REQUEST);
-        userService.save(user);
+        userService.add(user);
         return new ResponseEntity<>(Collections.singletonMap("status","User created"), HttpStatus.OK);
     }
 
