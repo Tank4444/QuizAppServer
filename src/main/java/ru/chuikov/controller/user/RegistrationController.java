@@ -1,13 +1,18 @@
 package ru.chuikov.controller.user;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.chuikov.entity.User;
+import ru.chuikov.entity.UserRole;
 import ru.chuikov.service.UserService;
 
 import java.util.Collections;
@@ -20,12 +25,21 @@ public class RegistrationController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
-    public ResponseEntity<Map> addUser( @RequestBody User user){
-        var user1 =userService.getUserByEmail(user.getEmail());
-        if(user1.isPresent()) return new ResponseEntity<>(Collections.singletonMap("status","User with this email present"), HttpStatus.BAD_REQUEST);
-        userService.add(user);
+    @PostMapping(
+            //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    )
+    public ResponseEntity<Map> addUser(@RequestBody SimpleUserInfo info){
+        var user =userService.getUserByEmail(info.username);
+        if(user!=null) return new ResponseEntity<>(Collections.singletonMap("status","User with this email present"), HttpStatus.BAD_REQUEST);
+        User newUser = new User(info.username,info.password,UserRole.USER);
+        userService.add(newUser);
         return new ResponseEntity<>(Collections.singletonMap("status","User created"), HttpStatus.OK);
+    }
+    @NoArgsConstructor
+    public static class SimpleUserInfo{
+        public String username;
+        public String password;
+
     }
 
 }

@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.chuikov.entity.User;
+import ru.chuikov.entity.UserRole;
+import ru.chuikov.service.UserService;
 
 @SpringBootApplication
 public class Initializer {
@@ -18,9 +21,20 @@ public class Initializer {
     }
 
     @Bean
-    CommandLineRunner runner(){
+    CommandLineRunner runner(UserService userService){
         return args -> {
-
+            userService.add(
+                    new User(
+                            1L,
+                            "mail",
+                            "mail",
+                            "fn",
+                            "ln",
+                            "ORG",
+                            null,
+                            null,
+                            UserRole.USER
+                            ));
         };
     }
 }

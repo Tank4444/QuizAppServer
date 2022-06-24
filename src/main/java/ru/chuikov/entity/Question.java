@@ -1,6 +1,7 @@
 package ru.chuikov.entity;
 
-import jakarta.persistence.*;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "QUESTION")

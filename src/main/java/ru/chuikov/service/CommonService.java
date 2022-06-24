@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface CommonService<T> {
     void add(T t);
-    Optional<T> getById(Long id);
+    T getById(Long id);
     void updateById(T t);
     void deleteById(Long id);
     void deleteById(T t);

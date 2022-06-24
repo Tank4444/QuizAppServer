@@ -1,7 +1,7 @@
 package ru.chuikov.entity;
 
-import jakarta.persistence.*;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity

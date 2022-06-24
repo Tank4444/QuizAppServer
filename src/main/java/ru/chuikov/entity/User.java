@@ -1,18 +1,16 @@
 package ru.chuikov.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -25,11 +23,8 @@ public class User implements UserDetails {
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Long id;
         @Column
-        @NotNull
-        //@Pattern(regexp = "^[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}$")
         private String email;
         @Column
-        @NotNull
         private String password;
         @Column
         private String first_name;
@@ -43,6 +38,16 @@ public class User implements UserDetails {
 
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
         private List<File> files;
+
+        @Column(name = "role")
+        @Enumerated(EnumType.STRING)
+        private UserRole role;
+
+        public User(String email, String password, UserRole role) {
+                this.email = email;
+                this.password = password;
+                this.role = role;
+        }
 
         public Long getId() {
                 return id;
@@ -106,7 +111,7 @@ public class User implements UserDetails {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-                return new ArrayList<GrantedAuthority>();
+                return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
         }
 
         @Override
@@ -121,17 +126,17 @@ public class User implements UserDetails {
 
         @Override
         public boolean isAccountNonExpired() {
-                return false;
+                return true;
         }
 
         @Override
         public boolean isAccountNonLocked() {
-                return false;
+                return true;
         }
 
         @Override
         public boolean isCredentialsNonExpired() {
-                return false;
+                return true;
         }
 
         @Override

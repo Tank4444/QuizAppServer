@@ -6,5 +6,5 @@ import ru.chuikov.entity.User;
 import java.util.Optional;
 
 public interface UserService extends UserDetailsService,CommonService<User> {
-    Optional<User> getUserByEmail(String email);
+    User getUserByEmail(String email);
 }
