@@ -1,6 +1,8 @@
 package ru.chuikov.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,10 +17,24 @@ import java.util.List;
 
 @Entity
 @Table(name = "ACCOUNT")
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
+@Builder
 public class User implements UserDetails {
+        public User() {
+        }
+
+        public User(Long id, String email, String password, String first_name, String last_name, String org_name, List<Game> games, List<File> files, UserRole role) {
+                this.id = id;
+                this.email = email;
+                this.password = password;
+                this.first_name = first_name;
+                this.last_name = last_name;
+                this.org_name = org_name;
+                this.games = games;
+                this.files = files;
+                this.role = role;
+        }
+
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         private Long id;
@@ -34,9 +50,11 @@ public class User implements UserDetails {
         private String org_name;
 
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
+        @JsonIgnore
         private List<Game> games;
 
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
+        @JsonIgnore
         private List<File> files;
 
         @Column(name = "role")

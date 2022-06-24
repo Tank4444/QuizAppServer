@@ -1,11 +1,8 @@
-package ru.chuikov.controller.user;
+package ru.chuikov.controller.api;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +13,6 @@ import ru.chuikov.entity.UserRole;
 import ru.chuikov.service.UserService;
 
 import java.util.Collections;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api/reg")
@@ -28,7 +24,7 @@ public class RegistrationController {
     @PostMapping(
             //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE
     )
-    public ResponseEntity<Map> addUser(@RequestBody SimpleUserInfo info){
+    public ResponseEntity addUser(@RequestBody SimpleUserInfo info){
         var user =userService.getUserByEmail(info.username);
         if(user!=null) return new ResponseEntity<>(Collections.singletonMap("status","User with this email present"), HttpStatus.BAD_REQUEST);
         User newUser = new User(info.username,info.password,UserRole.USER);

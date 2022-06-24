@@ -2,7 +2,7 @@ package ru.chuikov.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,20 +11,15 @@ import ru.chuikov.repository.UserRepository;
 import ru.chuikov.service.UserService;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
-@Service @AllArgsConstructor @Transactional
-@Log4j2
+@Service @Log4j2
 public class UserServiceImpl implements UserService {
 
-
-    private final UserRepository userRepository;
-
-    private final PasswordEncoder encoder;
-
-    private final String TAG_LOG="USER_SERVICE";
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -88,4 +83,6 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.getByUsername(email);
     }
+
+
 }

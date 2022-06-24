@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface UserService extends UserDetailsService,CommonService<User> {
     User getUserByEmail(String email);
+
 }
