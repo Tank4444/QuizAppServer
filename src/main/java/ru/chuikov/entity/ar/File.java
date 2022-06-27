@@ -28,7 +28,7 @@ public class File {
     @Column(columnDefinition="BLOB")
     byte[] bytes;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "ACCOUNT_ID", nullable = false)
     @JsonIgnore
     User creator;

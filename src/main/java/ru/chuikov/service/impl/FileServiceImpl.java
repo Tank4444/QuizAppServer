@@ -29,12 +29,17 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public void addAll(Collection<File> files) {
+        fileRepository.saveAll(files);
+    }
+
+    @Override
     public File getById(Long id) {
         return fileRepository.getById(id);
     }
 
     @Override
-    public void updateById(File file) {
+    public void update(File file) {
         fileRepository.saveAndFlush(file);
     }
 

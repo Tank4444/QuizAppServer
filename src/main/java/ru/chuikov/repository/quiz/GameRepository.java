@@ -23,7 +23,5 @@ public interface GameRepository extends CommonRepository<Game> {
     @Query("SELECT g FROM Game g WHERE g.gameType = :type")
     List<Game> findAllByGameTypeId(@Param("type")GameType type);
 
-    @Query("SELECT g FROM Game g left join g.questions c WHERE c.id = g.id")
-    List<Game> findAllQuestions();
 
 }

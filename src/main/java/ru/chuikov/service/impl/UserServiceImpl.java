@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void addAll(Collection<User> users) {
+        userRepository.saveAll(users);
+    }
+
+    @Override
     public User getById(Long id) {
         log.info("get user with id {}",id);
         User user = userRepository.getByID(id);
@@ -52,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateById(User user) {
+    public void update(User user) {
         User userById = userRepository.getByID(user.getId());
         if((userById!=null)&&(userById.getEmail().equals(user.getEmail()))){
             userRepository.saveAndFlush(user);
