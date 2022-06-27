@@ -1,5 +1,6 @@
 package ru.chuikov;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,14 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.chuikov.entity.User;
-import ru.chuikov.entity.UserRole;
+import ru.chuikov.entity.actor.User;
+import ru.chuikov.entity.actor.UserRole;
 import ru.chuikov.service.UserService;
 
 @SpringBootApplication
-@EnableJpaRepositories(basePackages = "ru.chuikov.repository")
 @EnableTransactionManagement
-@EntityScan(basePackages = "ru.chuikov.entity")
 public class Initializer {
     @Bean
     public PasswordEncoder encoder() {
@@ -39,5 +38,10 @@ public class Initializer {
                             .password("mail")
                             .build());
         };
+    }
+
+    @Bean
+    public ModelMapper getMapper() {
+        return new ModelMapper();
     }
 }

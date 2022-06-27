@@ -1,4 +1,4 @@
-package ru.chuikov.entity;
+package ru.chuikov.entity.actor;
 
 
 public enum UserRole {

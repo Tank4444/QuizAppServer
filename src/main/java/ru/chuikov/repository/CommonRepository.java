@@ -12,7 +12,5 @@ import java.util.Optional;
 
 @NoRepositoryBean
 public interface CommonRepository<T> extends JpaRepository<T,Long> {
-    Optional<T> findById(Long id);
-    void deleteById(Long id);
-    List<T> findAll();
+
 }

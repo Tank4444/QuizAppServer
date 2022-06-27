@@ -1,15 +1,13 @@
 package ru.chuikov.service.impl;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.chuikov.entity.File;
-import ru.chuikov.entity.User;
-import ru.chuikov.repository.FileRepository;
-import ru.chuikov.repository.UserRepository;
+import ru.chuikov.entity.ar.File;
+import ru.chuikov.entity.actor.User;
+import ru.chuikov.repository.ar.FileRepository;
+import ru.chuikov.repository.actor.UserRepository;
 import ru.chuikov.service.FileService;
 
 import javax.transaction.Transactional;
@@ -81,13 +79,17 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void editMetaData(Long id, String meta) {
-
+    public void editMetaData(Long id, String meta) throws Exception {
+        var file1 = fileRepository.findById(id);
+        if(file1.isEmpty()) throw new Exception("File with id "+id+" not found");
+        var file = file1.get();
+        file.setMeta(meta);
+        fileRepository.saveAndFlush(file);
     }
 
     @Override
     public void deleteFile(Long id) {
-
+        fileRepository.deleteById(id);
     }
 
     @Override

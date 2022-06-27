@@ -1,4 +1,4 @@
-package ru.chuikov.entity;
+package ru.chuikov.entity.quiz;
 
 
 import javax.persistence.*;
@@ -18,5 +18,5 @@ public class Answer {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "QUIZ_ID", nullable = false)
-    Quiz quiz;
+    Question question;
 }

@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.chuikov.entity.User;
-import ru.chuikov.entity.UserRole;
+import ru.chuikov.entity.actor.User;
+import ru.chuikov.entity.actor.UserRole;
 import ru.chuikov.service.UserService;
 
 import java.util.Collections;

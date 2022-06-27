@@ -1,4 +1,4 @@
-package ru.chuikov.entity;
+package ru.chuikov.entity.ar;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.chuikov.entity.actor.User;
+import ru.chuikov.entity.ar.AR;
 
 import javax.persistence.*;
 
@@ -19,6 +21,8 @@ public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+
+    String name;
 
     @Lob
     @Column(columnDefinition="BLOB")

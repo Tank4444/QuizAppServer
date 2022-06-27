@@ -1,16 +1,14 @@
 package ru.chuikov.service.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.chuikov.entity.User;
-import ru.chuikov.repository.UserRepository;
+import ru.chuikov.entity.actor.User;
+import ru.chuikov.repository.actor.UserRepository;
 import ru.chuikov.service.UserService;
 
-import javax.transaction.Transactional;
 import java.util.Collection;
 
 @Service @Log4j2

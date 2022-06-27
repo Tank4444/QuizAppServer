@@ -1,8 +1,7 @@
 package ru.chuikov.service;
 
 
-import org.springframework.stereotype.Service;
-import ru.chuikov.entity.File;
+import ru.chuikov.entity.ar.File;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public interface FileService extends CommonService<File> {
     void addFile(byte[] bytes,Long idUser);
     void addFile(byte[] bytes,Long idUser,String meta);
 
-    void editMetaData(Long id, String meta);
+    void editMetaData(Long id, String meta) throws Exception;
 
     void deleteFile(Long id);
 

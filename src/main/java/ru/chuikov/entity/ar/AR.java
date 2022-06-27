@@ -1,4 +1,4 @@
-package ru.chuikov.entity;
+package ru.chuikov.entity.ar;
 
 
 import javax.persistence.*;
@@ -12,9 +12,8 @@ public class AR {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "AR_TYPE_ID", nullable = false)
-    ARType arType;
+    @Enumerated(EnumType.STRING)
+    ArType arType;
 
     @Column
     String hint;

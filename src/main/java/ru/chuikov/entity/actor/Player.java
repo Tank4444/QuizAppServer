@@ -1,5 +1,7 @@
-package ru.chuikov.entity;
+package ru.chuikov.entity.actor;
 
+
+import ru.chuikov.entity.quiz.Game;
 
 import javax.persistence.*;
 import java.util.Date;

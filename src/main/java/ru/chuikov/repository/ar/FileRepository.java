@@ -1,9 +1,10 @@
-package ru.chuikov.repository;
+package ru.chuikov.repository.ar;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import ru.chuikov.entity.File;
+import ru.chuikov.entity.ar.File;
+import ru.chuikov.repository.CommonRepository;
 
 import java.util.List;
 

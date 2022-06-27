@@ -1,11 +1,15 @@
-package ru.chuikov.entity;
+package ru.chuikov.entity.quiz;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import ru.chuikov.entity.actor.Player;
+import ru.chuikov.entity.actor.User;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "APP")
+@Table(name = "GAME")
 public class Game {
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,13 +17,14 @@ public class Game {
 
         @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
         @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+        @JsonIgnore
         User creator;
 
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
         List<Player> player;
 
-        @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-        @JoinColumn(name = "APP_TYPE_ID", nullable = false)
+        @Column(name = "game_type")
+        @Enumerated(EnumType.STRING)
         GameType gameType;
 
 
