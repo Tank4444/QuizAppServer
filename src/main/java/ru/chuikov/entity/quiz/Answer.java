@@ -1,22 +1,33 @@
 package ru.chuikov.entity.quiz;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ANSWER")
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
     @Column
-    String text;
+    private String text;
 
     @Column
-    Boolean isRight;
+    private Boolean isRight;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "QUIZ_ID", nullable = false)
-    Question question;
+    @JsonBackReference
+    private Question question;
 }
