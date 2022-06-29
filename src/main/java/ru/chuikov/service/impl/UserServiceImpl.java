@@ -10,6 +10,7 @@ import ru.chuikov.repository.actor.UserRepository;
 import ru.chuikov.service.UserService;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service @Log4j2
 public class UserServiceImpl implements UserService {
@@ -32,15 +33,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void add(User user) {
+    public User add(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         log.info("add user with username {} and password = {}",user.getEmail(),user.getPassword());
-        userRepository.saveAndFlush(user);
+        return userRepository.saveAndFlush(user);
     }
 
     @Override
-    public void addAll(Collection<User> users) {
-        userRepository.saveAll(users);
+    public List<User> addAll(Collection<User> users) {
+        return userRepository.saveAll(users);
     }
 
     @Override
@@ -57,10 +58,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void update(User user) {
+    public User update(User user) {
         User userById = userRepository.getByID(user.getId());
         if((userById!=null)&&(userById.getEmail().equals(user.getEmail()))){
-            userRepository.saveAndFlush(user);
+            return userRepository.saveAndFlush(user);
         }else{
             throw new UsernameNotFoundException("user not found");
         }
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+         userRepository.deleteById(id);
     }
 
     @Override

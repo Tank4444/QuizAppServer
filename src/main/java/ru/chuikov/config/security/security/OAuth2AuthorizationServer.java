@@ -10,6 +10,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
+import javax.sql.DataSource;
+import java.util.Date;
+
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdapter {
@@ -40,6 +43,8 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
                 .allowFormAuthenticationForClients();
     }
 
+    @Autowired
+    private DataSource dataSource;
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 //        clients
@@ -53,12 +58,15 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
 //                .redirectUris("http://localhost:8080/login")
 //                .accessTokenValiditySeconds(5000)
 //                .refreshTokenValiditySeconds(50000);
-        clients.inMemory()
+
+        clients
+                .inMemory()
+                //.jdbc(dataSource).passwordEncoder(encoder)
                 .withClient("app").secret(encoder.encode("app"))
                 .authorizedGrantTypes("password", "refresh_token")
                 .authorities("CLIENT")
                 .scopes("all")
-
+                .accessTokenValiditySeconds(60*60)//sec * min = 1 hour
         ;
     }
 }

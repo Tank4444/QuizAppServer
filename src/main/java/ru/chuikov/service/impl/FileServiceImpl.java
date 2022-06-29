@@ -24,13 +24,13 @@ public class FileServiceImpl implements FileService {
     private UserRepository userRepository;
 
     @Override
-    public void add(File file) {
-            fileRepository.saveAndFlush(file);
+    public File add(File file) {
+            return fileRepository.save(file);
     }
 
     @Override
-    public void addAll(Collection<File> files) {
-        fileRepository.saveAll(files);
+    public List<File> addAll(Collection<File> files) {
+        return fileRepository.saveAll(files);
     }
 
     @Override
@@ -39,8 +39,8 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void update(File file) {
-        fileRepository.saveAndFlush(file);
+    public File update(File file) {
+        return fileRepository.saveAndFlush(file);
     }
 
     @Override
@@ -59,11 +59,11 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void addFile(byte[] bytes, Long id) {
+    public File addFile(byte[] bytes, Long id) {
         User user = userRepository.getByID(id);
         if(user == null) throw new UsernameNotFoundException("User not found");
 
-        fileRepository.saveAndFlush(File.builder()
+        return fileRepository.saveAndFlush(File.builder()
                 .bytes(bytes)
                 .creator(user)
                 .meta("")
@@ -72,10 +72,10 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void addFile(byte[] bytes, Long id, String meta) {
+    public File addFile(byte[] bytes, Long id, String meta) {
         User user = userRepository.getByID(id);
         if(user == null) throw new UsernameNotFoundException("User not found");
-        fileRepository.saveAndFlush(File.builder()
+        return fileRepository.saveAndFlush(File.builder()
                 .bytes(bytes)
                 .creator(user)
                 .meta("")
@@ -84,12 +84,12 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public void editMetaData(Long id, String meta) throws Exception {
+    public File editMetaData(Long id, String meta) throws Exception {
         var file1 = fileRepository.findById(id);
         if(file1.isEmpty()) throw new Exception("File with id "+id+" not found");
         var file = file1.get();
         file.setMeta(meta);
-        fileRepository.saveAndFlush(file);
+        return fileRepository.saveAndFlush(file);
     }
 
     @Override

@@ -13,6 +13,8 @@ import ru.chuikov.entity.actor.UserRole;
 import ru.chuikov.service.UserService;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "/api/reg")
@@ -28,7 +30,14 @@ public class RegistrationController {
         var user =userService.getUserByEmail(info.username);
         if(user!=null) return new ResponseEntity<>(Collections.singletonMap("status","User with this email present"), HttpStatus.BAD_REQUEST);
         User newUser = new User(info.username,info.password,UserRole.USER);
-        userService.add(newUser);
+        try {
+            userService.add(newUser);
+        } catch (Exception e) {
+            return new ResponseEntity(Map.of(
+                    "status","error",
+                        "message",e.getMessage()
+            ),HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>(Collections.singletonMap("status","User created"), HttpStatus.OK);
     }
     @NoArgsConstructor

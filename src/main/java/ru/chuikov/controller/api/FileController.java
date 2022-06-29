@@ -9,12 +9,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.chuikov.entity.actor.User;
+import ru.chuikov.entity.ar.File;
 import ru.chuikov.service.FileService;
 import ru.chuikov.service.UserService;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -36,7 +38,12 @@ public class FileController {
     @PostMapping(path = "/del/{id}")
     public ResponseEntity delFile(@AuthenticationPrincipal User user,@PathVariable Long id) throws IOException {
         log.info("user with id {} and username {} try remove file with id {}",user.getId(),user.getEmail(),id);
-        var file = fileService.getById(id);
+        File file = null;
+        try {
+            file = fileService.getById(id);
+        } catch (Exception e) {
+            return new ResponseEntity(Map.of("status","error","message",e.getMessage()),HttpStatus.BAD_REQUEST);
+        }
         if(file == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         if(!Objects.equals(file.getCreator().getId(), user.getId()))return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         fileService.deleteFile(id);

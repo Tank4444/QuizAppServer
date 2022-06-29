@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface FileService extends CommonService<File> {
 
-    void addFile(byte[] bytes,Long idUser);
-    void addFile(byte[] bytes,Long idUser,String meta);
+    File addFile(byte[] bytes,Long idUser);
+    File addFile(byte[] bytes,Long idUser,String meta);
 
-    void editMetaData(Long id, String meta) throws Exception;
+    File editMetaData(Long id, String meta) throws Exception;
 
     void deleteFile(Long id);
 

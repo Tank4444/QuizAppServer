@@ -13,7 +13,7 @@ import java.util.List;
 public interface GameRepository extends CommonRepository<Game> {
 
     @Query("SELECT g FROM Game g left join g.creator c WHERE c.id = :id")
-    List<Game> findAllByUserId(@Param("id") Long userId);
+    List<Game> findAllByCreatorId(@Param("id") Long creatorId);
     @Query("SELECT g FROM Game g left join g.player c WHERE c.id = :id")
     List<Game> findAllByPlayerId(@Param("id") Long playerId);
 
