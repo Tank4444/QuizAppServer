@@ -1,6 +1,6 @@
 package ru.chuikov.entity.dto.quiz;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jdk.jfr.DataAmount;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +17,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class QuestionDto {
 
         Long id;
@@ -27,6 +30,6 @@ public class QuestionDto {
 
         List<AnswerDto> answers;
 
-        Game game;
+        GameDto game;
 
 }

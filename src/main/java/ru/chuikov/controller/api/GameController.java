@@ -127,15 +127,19 @@ public class GameController {
         List<Game> or = null;
         try {
             or = quizService.getGamesListByCreatorId(user.getId());
+//            var ret = or
+//                    .stream()
+//                    .map(game -> modelMapper
+//                            .typeMap(Game.class,GameDto.class)
+//                            .addMappings(
+//                                    mapping -> {
+//                                        mapping.skip(GameDto::setCreator);
+//                                    }
+//                            ).map(game))
+//                    .toList();
             var ret = or
                     .stream()
-                    .map(game -> modelMapper
-                            .typeMap(Game.class,GameDto.class)
-                            .addMappings(
-                                    mapping -> {
-                                        mapping.skip(GameDto::setCreator);
-                                    }
-                            ).map(game))
+                    .map(game -> modelMapper.map(game,GameDto.class))
                     .toList();
             return ResponseEntity.ok(ret);
 
